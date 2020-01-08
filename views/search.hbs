@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Index</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <h2 class="text-white offset-md-5">String search</h2>
+    </nav>
+    <br> <br>
+    <div class="container-fluid">
+        <div class="offset-md-4" id="form">
+              <form action="/?page=1" method="POST">
+                <div class="row">
+                    <input type="text" class="form-control col-md-4" placeholder="Search....." name="search" id="search"
+                        value='{{search}}'>
+
+                    <button type="submit" class="btn btn-secondary col-md-2 offset-1">
+                        Search
+                    </button>
+                </div>
+            </form>
+  
+        </div>
+        <br> <br>
+        <div class="row">
+            <br> <br>
+            <div class="offset-md-3 col-md-6">
+                {{#if response}}
+                               
+                <table class="table table-striped">
+                    {{#if responsePaginationPrevious}}
+                    <thead>
+                        <tr>
+                            <th><a style="color: black" href="http://localhost:3000/?page={{responsePaginationPrevious.current}}&field=name">Name</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/?page={{responsePaginationPrevious.current}}&field=age">Age</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/?page={{responsePaginationPrevious.current}}&field=empid">Emp.id</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/?page={{responsePaginationPrevious.current}}&field=nationality">Nationality</a></th>
+                        </tr>
+                    </thead>
+                    {{else}}
+                    {{#if responsePaginationNext}}
+                    <thead>
+                        <tr>
+                            <th><a style="color: black" href="http://localhost:3000/?page={{responsePaginationNext.current}}&field=name">Name</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/?page={{responsePaginationNext.current}}&field=age">Age</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/?page={{responsePaginationNext.current}}&field=empid">Emp.id</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/?page={{responsePaginationNext.current}}&field=nationality">Nationality</a></th>
+                        </tr>
+                    </thead>
+                    {{!-- {{else}} --}}
+                    {{!-- {{#pf:if response.length "=" "1"}}
+                        <thead>
+                            <tr>
+                                <th style="color: black">Name</th>
+                                <th style="color: black">Age</th>
+                                <th style="color: black">Emp.id</th>
+                                <th style="color: black">Nationality</th>
+                            </tr>
+                        </thead>
+                    {{/pf:if}} --}}
+
+                    {{/if}}
+                    {{/if}}
+
+
+                    {{!-- serach --}}
+                    {{#if searchResponsePagination}}
+                    {{#if searchResponsePaginationPrevious}}
+                    <thead>
+                        <tr>
+                            <th><a style="color: black" href="http://localhost:3000/search?page={{searchResponsePaginationPrevious.current}}&field=name">Name</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/search?page={{searchResponsePaginationPrevious.current}}&field=age">Age</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/search?page={{searchResponsePaginationPrevious.current}}&field=empid">Emp.id</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/search?page={{searchResponsePaginationPrevious.current}}&field=nationality">Nationality</a></th>
+                        </tr>
+                    </thead>
+                    {{else}}
+                    {{#if searchResponsePaginationNext}}
+                    <thead>
+                        <tr>
+                            <th><a style="color: black" href="http://localhost:3000/search?page={{searchResponsePaginationNext.current}}&field=name">Name</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/search?page={{searchResponsePaginationNext.current}}&field=age">Age</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/search?page={{searchResponsePaginationNext.current}}&field=empid">Emp.id</a></th>
+                            <th><a style="color: black" href="http://localhost:3000/search?page={{searchResponsePaginationNext.current}}&field=nationality">Nationality</a></th>
+                        </tr>
+                    </thead>
+                    
+
+                    {{else}}
+                   <thead>
+                        <tr>
+                            <th style="color: black">Name</th>
+                            <th style="color: black">Age</th>
+                            <th style="color: black">Emp.id</th>
+                            <th style="color: black">Nationality</th>
+                        </tr>
+                    </thead>
+                    {{/if}}
+                    {{/if}}
+                    {{/if}}
+
+                    <tbody>
+                        
+                        {{#each response}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{age}}</td>
+                            <td>{{empid}}</td>
+                            <td>{{nationality}}</td>
+                        </tr>
+                        {{/each}}
+                        
+                    </tbody>
+                </table>
+                {{else}}
+                    <p class="offset-md-3">No records found</p>
+                {{/if}}
+                {{!-- {{response}} --}}
+            </div>
+        </div>
+
+        <br> <br>
+
+        {{#if responsePagination}}
+
+        <nav aria-label="Page navigation example" class="offset-md-4">
+
+            <ul class="pagination">
+
+                {{#if responsePaginationPrevious}}
+                    <li class="page-item offset-md-1"><a class="page-link" href="http://localhost:3000?page={{responsePaginationPrevious.page}}">
+                    Previous</a></li>
+
+                    {{else}}
+                    <li class="offset-md-1"><a class="page-link disabled" style="color: rgba(0,0,0, 0.4);" href="">
+                    Previous</a></li>
+                {{/if}}
+
+                {{#if responsePaginationPrevious}}
+                        <p class="offset-md-1">{{responsePaginationPrevious.current}} of {{responsePaginationPrevious.pages}}</p>
+
+                        {{else}}
+                        {{#if responsePaginationNext}}
+                            <p class="offset-md-1">{{responsePaginationNext.current}} of {{responsePaginationNext.pages}}</p>
+
+                            {{else}}
+                            <p class="offset-md-1">1</p>
+                        {{/if}}
+                {{/if}}
+
+                {{#if responsePaginationNext}}
+                    <li class="page-item offset-md-1"><a class="page-link" href="http://localhost:3000?page={{responsePaginationNext.page}}">
+                    Next</a></li>
+
+                    {{else}}
+                    <li class="offset-md-1"><a class="page-link disabled" style="color: rgba(0,0,0, 0.4);" href="">
+                    Next</a></li>
+                {{/if}} 
+
+            </ul>
+
+        </nav>
+        {{/if}}
+
+
+
+
+
+        {{!-- search --}}
+        {{#if searchResponsePagination}}
+
+        <nav aria-label="Page navigation example" class="offset-md-4">
+
+            <ul class="pagination">
+
+                {{#if searchResponsePaginationPrevious}}
+                    <li class="page-item offset-md-1"><a class="page-link" href="http://localhost:3000/search?page={{searchResponsePaginationPrevious.page}}">
+                    Previous</a></li>
+
+                    {{else}}
+                    <li class="offset-md-1"><a class="page-link disabled" style="color: rgba(0,0,0, 0.4);" href="">
+                    Previous</a></li>
+                {{/if}}
+
+                {{#if searchResponsePaginationPrevious}}
+                        <p class="offset-md-1">{{searchResponsePaginationPrevious.current}} of {{searchResponsePaginationPrevious.pages}}</p>
+
+                        {{else}}
+                        {{#if searchResponsePaginationNext}}
+                            <p class="offset-md-1">{{searchResponsePaginationNext.current}} of {{searchResponsePaginationNext.pages}}</p>
+
+                            {{else}}
+                            <p class="offset-md-1">1</p>
+                        {{/if}}
+                {{/if}}
+
+                {{#if searchResponsePaginationNext}}
+                    <li class="page-item offset-md-1"><a class="page-link" href="http://localhost:3000/search?page={{searchResponsePaginationNext.page}}">
+                    Next</a></li>
+
+                    {{else}}
+                    <li class="offset-md-1"><a class="page-link disabled" style="color: rgba(0,0,0, 0.4);" href="">
+                    Next</a></li>
+                {{/if}} 
+
+            </ul>
+
+        </nav>
+        {{/if}}
+
+    </div>
+  
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+</body>
